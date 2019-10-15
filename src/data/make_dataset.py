@@ -3,7 +3,7 @@
 import logging
 # from pathlib import Path
 # from dotenv import find_dotenv, load_dotenv
-from src.data.StockDataGetter import StockDataGetter
+from src.data.stock_getter import StockDataGetter
 import os
 
 # @click.command()
