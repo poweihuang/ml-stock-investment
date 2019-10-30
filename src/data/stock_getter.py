@@ -3,10 +3,10 @@ import requests
 import pandas as pd
 from FinMind.Data import Load
 
-
 URL = 'http://finmindapi.servebeer.com/api/data'
 LIST_URL = 'http://finmindapi.servebeer.com/api/datalist'
 TRANSLATE_URL = 'http://finmindapi.servebeer.com/api/translation'
+
 
 class StockDataGetter:
     """
@@ -18,7 +18,9 @@ class StockDataGetter:
     output:
         pandas dataframe
     """
-    def get_stock_info(self):
+
+    @staticmethod
+    def get_stock_info():
         form_data = {'dataset': 'TaiwanStockInfo'}
         res = requests.post(
             URL, verify=True,
@@ -27,7 +29,8 @@ class StockDataGetter:
         data = pd.DataFrame(res.json()['data'])
         return data
 
-    def get_stock_data(self, dataset, stock_id, date):
+    @staticmethod
+    def get_stock_data(dataset, stock_id, date):
         form_data = {'dataset': dataset,
                      'stock_id': stock_id,
                      'date': date}
@@ -38,7 +41,8 @@ class StockDataGetter:
         data = pd.DataFrame(res.json()['data'])
         return data
 
-    def get_finance_statement(self, dataset, stock_id, date):
+    @staticmethod
+    def get_finance_statement(dataset, stock_id, date):
         form_data = {'dataset': dataset,
                      'stock_id': stock_id,
                      'date': date}
