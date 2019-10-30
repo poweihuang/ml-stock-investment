@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
-from FinMind.Data import Load
 import requests
 import pandas as pd
+from FinMind.Data import Load
 
-url = 'http://finmindapi.servebeer.com/api/data'
-list_url = 'http://finmindapi.servebeer.com/api/datalist'
-translate_url = 'http://finmindapi.servebeer.com/api/translation'
+
+URL = 'http://finmindapi.servebeer.com/api/data'
+LIST_URL = 'http://finmindapi.servebeer.com/api/datalist'
+TRANSLATE_URL = 'http://finmindapi.servebeer.com/api/translation'
 
 class StockDataGetter:
     """
@@ -17,42 +18,34 @@ class StockDataGetter:
     output:
         pandas dataframe
     """
-    def __init__(self, dataset=None, stock_id=None, date=None):
-        self.dataset = dataset
-        self.stock_id = stock_id
-        self.date = date
-
-    def stock_info_getter(self):
+    def get_stock_info(self):
         form_data = {'dataset': 'TaiwanStockInfo'}
         res = requests.post(
-            url, verify=True,
+            URL, verify=True,
             data=form_data)
 
-        temp = res.json()
-        data = pd.DataFrame(temp['data'])
+        data = pd.DataFrame(res.json()['data'])
         return data
 
-    def stock_data_getter(self, dataset, stock_id, date):
+    def get_stock_data(self, dataset, stock_id, date):
         form_data = {'dataset': dataset,
                      'stock_id': stock_id,
                      'date': date}
         res = requests.post(
-            url, verify=True,
+            URL, verify=True,
             data=form_data)
 
-        temp = res.json()
-        data = pd.DataFrame(temp['data'])
+        data = pd.DataFrame(res.json()['data'])
         return data
 
-    def finance_statement_getter(self, dataset, stock_id, date):
+    def get_finance_statement(self, dataset, stock_id, date):
         form_data = {'dataset': dataset,
                      'stock_id': stock_id,
                      'date': date}
         res = requests.post(
-            url, verify=True,
+            URL, verify=True,
             data=form_data)
 
-        temp = res.json()
-        data = pd.DataFrame(temp['data'])
+        data = pd.DataFrame(res.json()['data'])
         data = Load.transpose(data)
         return data
